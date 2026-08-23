@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Trek{% endblock %}
+
+{% block content %}
+
+<h1>Edit Trek</h1>
+
+<div class="box">
+
+<form method="POST">
+
+    <label>Name</label>
+
+    <input
+        class="form-control mb-3"
+        name="name"
+        value="{{ trek.name }}"
+        required
+    >
+
+    <label>Location</label>
+
+    <input
+        class="form-control mb-3"
+        name="location"
+        value="{{ trek.location }}"
+        required
+    >
+
+    <label>Difficulty</label>
+
+    <select class="form-select mb-3" name="difficulty">
+
+        {% for item in difficulties %}
+
+            <option
+                value="{{ item.value }}"
+                {% if item == trek.difficulty %}selected{% endif %}
+            >
+                {{ item.value }}
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+    <label>Duration</label>
+
+    <input
+        class="form-control mb-3"
+        type="number"
+        name="duration"
+        value="{{ trek.duration }}"
+        min="1"
+        required
+    >
+
+    <label>Total Slots</label>
+
+    <input
+        class="form-control mb-3"
+        type="number"
+        name="slots"
+        value="{{ trek.total_slots }}"
+        min="1"
+        required
+    >
+
+    <label>Start Date</label>
+
+    <input
+        class="form-control mb-3"
+        type="date"
+        name="start_date"
+        value="{{ trek.start_date.strftime('%Y-%m-%d') }}"
+        required
+    >
+
+    <label>End Date</label>
+
+    <input
+        class="form-control mb-3"
+        type="date"
+        name="end_date"
+        value="{{ trek.end_date.strftime('%Y-%m-%d') }}"
+        required
+    >
+
+    <label>Assign Staff</label>
+
+    <select class="form-select mb-3" name="staff_id">
+
+        <option value="">No staff assigned</option>
+
+        {% for member in staff %}
+
+            <option
+                value="{{ member.id }}"
+                {% if trek.staff_id == member.id %}selected{% endif %}
+            >
+                {{ member.name }}
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+    <label>Description</label>
+
+    <textarea
+        class="form-control mb-3"
+        name="description"
+    >{{ trek.description or "" }}</textarea>
+
+    <button class="btn btn-main">
+        Update Trek
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}

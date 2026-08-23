@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>Staff Dashboard</h1>
+
+<p>
+    Welcome, {{ current_user.name }}
+</p>
+
+<h2>Assigned Treks</h2>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Trek</th>
+        <th>Location</th>
+        <th>Slots</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for trek in treks %}
+
+    <tr>
+
+        <td>{{ trek.name }}</td>
+
+        <td>{{ trek.location }}</td>
+
+        <td>
+            {{ trek.available_slots }}/{{ trek.total_slots }}
+        </td>
+
+        <td>{{ trek.status.value }}</td>
+
+        <td>
+            <a href="{{ url_for('staff_trek', trek_id=trek.id) }}">
+                Manage
+            </a>
+        </td>
+
+    </tr>
+
+    {% else %}
+
+    <tr>
+        <td colspan="5">
+            No trek has been assigned to you.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

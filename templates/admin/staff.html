@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Staff{% endblock %}
+
+{% block content %}
+
+<h1>Manage Staff</h1>
+
+<div class="box">
+
+  <form method="GET" class="row">
+
+    <div class="col-md-8">
+
+      <input class="form-control" name="search" placeholder="Search staff by name" value="{{ search }}">
+
+    </div>
+
+    <div class="col-md-4">
+
+      <button class="btn btn-main">
+        Search
+      </button>
+
+    </div>
+
+  </form>
+
+</div>
+
+
+<table class="table table-bordered">
+
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Approved</th>
+    <th>Blacklisted</th>
+    <th>Action</th>
+  </tr>
+
+  {% for member in staff %}
+
+  <tr>
+
+    <td>{{ member.id }}</td>
+    <td>{{ member.name }}</td>
+    <td>{{ member.email }}</td>
+    <td>{{ member.phone }}</td>
+
+    <td>
+      {% if member.approved %}
+      Yes
+      {% else %}
+      No
+      {% endif %}
+    </td>
+
+    <td>
+      {% if member.blacklisted %}
+      Yes
+      {% else %}
+      No
+      {% endif %}
+    </td>
+
+    <td>
+
+      {% if not member.approved %}
+
+      <a href="{{ url_for('approve_staff', user_id=member.id) }}">
+        Approve
+      </a>
+
+      {% endif %}
+
+      {% if member.blacklisted %}
+
+      <a href="{{ url_for('blacklist_staff', user_id=member.id) }}">
+        Remove Blacklist
+      </a>
+
+      {% else %}
+
+      <a href="{{ url_for('blacklist_staff', user_id=member.id) }}">
+        Blacklist
+      </a>
+
+      {% endif %}
+
+    </td>
+
+  </tr>
+
+  {% endfor %}
+
+</table>
+
+{% endblock %}

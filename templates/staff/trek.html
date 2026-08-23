@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Trek{% endblock %}
+
+{% block content %}
+
+<h1>{{ trek.name }}</h1>
+
+<div class="box">
+
+    <p>
+        Location: {{ trek.location }}
+    </p>
+
+    <p>
+        Difficulty: {{ trek.difficulty.value }}
+    </p>
+
+    <p>
+        Dates:
+        {{ trek.start_date }}
+        to
+        {{ trek.end_date }}
+    </p>
+
+    <form method="POST">
+
+        <label>Available Slots</label>
+
+        <input
+            class="form-control mb-3"
+            type="number"
+            name="slots"
+            value="{{ trek.total_slots }}"
+                   min="1"
+            required
+        >
+
+        <label>Status</label>
+
+        <select class="form-select mb-3" name="status">
+
+            {% for status in statuses %}
+
+                <option
+                    value="{{ status.value }}"
+                    {% if status == trek.status %}selected{% endif %}
+                >
+                    {{ status.value }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button class="btn btn-main">
+            Update Trek
+        </button>
+
+    </form>
+
+</div>
+
+
+<h2>Registered Participants</h2>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Booking Date</th>
+    </tr>
+
+    {% for booking in participants %}
+
+    <tr>
+
+        <td>{{ booking.user.name }}</td>
+
+        <td>{{ booking.user.email }}</td>
+
+        <td>{{ booking.user.phone }}</td>
+
+        <td>{{ booking.booking_date }}</td>
+
+    </tr>
+//
+    {% else %}
+
+    <tr>
+        <td colspan="4">
+            No particpants yet.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Add Trek{% endblock %}
+
+{% block content %}
+
+<h1>Add Trek</h1>
+
+<div class="box">
+
+<form method="POST">
+
+    <label>Name</label>
+    <input class="form-control mb-3" name="name" required>
+
+    <label>Location</label>
+    <input class="form-control mb-3" name="location" required>
+
+    <label>Difficulty</label>
+
+    <select class="form-select mb-3" name="difficulty">
+
+        {% for item in difficulties %}
+
+            <option value="{{ item.value }}">
+                {{ item.value }}
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+    <label>Duration</label>
+    <input class="form-control mb-3" type="number" name="duration" min="1" required>
+
+    <label>Total Slots</label>
+    <input class="form-control mb-3" type="number" name="slots" min="1" required>
+
+    <label>Start Date</label>
+    <input class="form-control mb-3" type="date" name="start_date" required>
+
+    <label>End Date</label>
+    <input class="form-control mb-3" type="date" name="end_date" required>
+
+    <label>Assign Staff</label>
+
+    <select class="form-select mb-3" name="staff_id">
+
+        <option value="">No staff assigned</option>
+
+        {% for member in staff %}
+
+            <option value="{{ member.id }}">
+                {{ member.name }}
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+    <label>Description</label>
+
+    <textarea
+        class="form-control mb-3"
+        name="description"
+    ></textarea>
+
+    <button class="btn btn-main">
+        Add Trek
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}

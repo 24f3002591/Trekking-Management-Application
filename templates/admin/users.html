@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+
+<h1>Users</h1>
+
+<form method="GET">
+
+    <input
+        class="form-control mb-2"
+        name="search"
+        placeholder="Search user by name"
+        value="{{ search }}"
+    >
+
+    <button class="btn btn-main">
+        Search
+    </button>
+
+</form>
+
+<br>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Blacklisted</th>
+    <th>Action</th>
+</tr>
+
+{% for user in users %}
+
+<tr>
+
+    <td>{{ user.id }}</td>
+    <td>{{ user.name }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.phone }}</td>
+
+    <td>
+        {% if user.blacklisted %}
+            Yes
+        {% else %}
+            No
+        {% endif %}
+    </td>
+
+    <td>
+        <a href="{{ url_for('blacklist_user', user_id=user.id) }}">
+
+            {% if user.blacklisted %}
+                Remove Blacklist
+            {% else %}
+                Blacklist
+            {% endif %}
+
+        </a>
+    </td>
+
+</tr>
+
+{% else %}
+
+<tr>
+    <td colspan="6">No users found.</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

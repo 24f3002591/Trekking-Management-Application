@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>Admin Dashboard</h1>
+
+<p>
+    Welcome, {{ current_user.name }}
+</p>
+
+<div class="row">
+
+    <div class="col-md-3 mb-3">
+        <div class="stat">
+            <h2>{{ total_treks }}</h2>
+            <p>Treks</p>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat">
+            <h2>{{ total_users }}</h2>
+            <p>Users</p>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat">
+            <h2>{{ total_staff }}</h2>
+            <p>Staff</p>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-3">
+        <div class="stat">
+            <h2>{{ total_bookings }}</h2>
+            <p>Bookings</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="box">
+
+    <h2>Admin Actions</h2>
+
+    <a class="btn btn-main" href="{{ url_for('manage_treks') }}">
+        Manage Treks
+    </a>
+
+    <a class="btn btn-main" href="{{ url_for('manage_staff') }}">
+        Manage Staff
+    </a>
+
+    <a class="btn btn-main" href="{{ url_for('manage_users') }}">
+        Manage Users
+    </a>
+
+    <a class="btn btn-main" href="{{ url_for('admin_bookings') }}">
+        View Bookings
+    </a>
+
+</div>
+
+{% endblock %}

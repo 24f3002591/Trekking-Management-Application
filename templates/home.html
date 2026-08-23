@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div style="
+    text-align:center;
+    padding:70px 20px 55px;
+">
+
+    <h1 style="font-size:46px; margin-bottom:15px;">
+        Explore the Mountains with The Aware Trekker
+    </h1>
+
+    <p style="
+        font-size:18px;
+        max-width:700px;
+        margin:0 auto 25px;
+    ">
+        Discover trekking destinations, check available slots,
+        and choose a trek that matches your adventure.
+    </p>
+
+    {% if not current_user.is_authenticated %}
+
+        <a href="{{ url_for('login') }}"
+           class="btn btn-main">
+            Get Started
+        </a>
+
+    {% endif %}
+
+</div>
+
+
+
+
+
+<h2 style="margin:35px 0 20px;">Popular Trekking Destinations</h2>
+
+
+<div class="row">
+
+{% for trek in treks[:3] %}
+
+    <div class="col-md-4 mb-4">
+
+        <div class="box" style="height:100%;">
+
+            <h3>{{ trek.name }}</h3>
+
+            <p>
+                <b>Location:</b> {{ trek.location }}
+            </p>
+
+            <p>
+                <b>Difficulty:</b> {{ trek.difficulty.value }}
+            </p>
+
+            <p>
+                <b>Duration:</b> {{ trek.duration }} days
+            </p>
+
+            <p>
+                <b>Available slots:</b>
+                {{ trek.available_slots }}
+            </p>
+
+            <p>
+                {{ trek.description }}
+            </p>
+
+        </div>
+
+    </div>
+
+{% else %}
+
+    <div class="box">
+        No treks are available currently.
+    </div>
+
+{% endfor %}
+
+</div>
+<div  style="text-align:center; margin-top: 100px;">
+
+    <h2>Why The Aware Trekker?</h2>
+
+    <p style="max-width:750px; margin:10px auto 0;">
+        The Aware Trekker makes trekking activities easier to organize.
+        Trekkers can explore and book treks, while staff and
+        administrators can manage participants and trekking activities.
+    </p>
+
+</div>
+
+<div style="
+    text-align:center;
+    padding:30px 10px;
+    margin-top:15px;
+">
+
+    <h2>Ready for your next adventure?</h2>
+
+    <p>
+        Log in to view all available treks and make a booking.
+    </p>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+
+<h1>User Dashboard</h1>
+
+<p>Welcome, {{ current_user.name }}</p>
+
+<form method="GET" style="margin:20px 0;">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search by trek name or location"
+                value="{{ search }}"
+            >
+        </div>
+
+        <div class="col-md-3">
+
+            <select name="difficulty" class="form-select">
+
+                <option value="">All Difficulties</option>
+
+                {% for level in difficulties %}
+
+                    <option
+                        value="{{ level.value }}"
+                        {% if difficulty == level.value %}selected{% endif %}
+                    >
+                        {{ level.value }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <button class="btn btn-main">
+                Search
+            </button>
+
+            <a href="{{ url_for('user_dashboard') }}"
+               class="btn btn-secondary">
+                Clear
+            </a>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+<h2>Available Treks</h2>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Difficulty</th>
+    <th>Dates</th>
+    <th>Duration</th>
+    <th>Description</th>
+    <th>Slots</th>
+    <th>Action</th>
+</tr>
+
+{% for trek in treks %}
+
+<tr>
+    <td>{{ trek.name }}</td>
+
+    <td>{{ trek.location }}</td>
+
+    <td>{{ trek.difficulty.value }}</td>
+
+    <td>
+        {{ trek.start_date }} - {{ trek.end_date }}
+    </td>
+
+    <td>{{ trek.duration }} days</td>
+
+    <td>{{ trek.description }}</td>
+
+    <td>{{ trek.available_slots }}</td>
+
+    <td>
+
+        {% if trek.id in booked_trek_ids %}
+
+            Booked
+
+        {% elif trek.available_slots == 0 %}
+
+            Full
+
+        {% else %}
+
+            <a href="{{ url_for('book_trek', trek_id=trek.id) }}">
+                Book
+            </a>
+
+        {% endif %}
+
+    </td>
+</tr>
+
+{% else %}
+
+<tr>
+    <td colspan="8">No treks found.</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<h2>My Booked Treks</h2>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Trek</th>
+    <th>Location</th>
+    <th>Dates</th>
+    <th>Booking Status</th>
+    <th>Trek Status</th>
+</tr>
+
+{% for booking in bookings %}
+
+<tr>
+
+    <td>{{ booking.trek.name }}</td>
+
+    <td>{{ booking.trek.location }}</td>
+
+    <td>
+        {{ booking.trek.start_date }} -
+        {{ booking.trek.end_date }}
+    </td>
+
+    <td>{{ booking.status.value }}</td>
+
+    <td>{{ booking.trek.status.value }}</td>
+
+</tr>
+
+{% else %}
+
+<tr>
+    <td colspan="5">
+        You have not booked any trek yet.
+    </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

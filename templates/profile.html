@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<h1>My Profile</h1>
+
+<div class="box">
+
+    <form method="POST">
+
+        <label>Name</label>
+
+        <input
+            class="form-control mb-3"
+            type="text"
+            name="name"
+            value="{{ current_user.name }}"
+            required
+        >
+
+        <label>Email</label>
+
+        <input
+            class="form-control mb-3"
+            type="email"
+            value="{{ current_user.email }}"
+            disabled
+        >
+
+        <label>Phone</label>
+
+        <input
+            class="form-control mb-3"
+            type="text"
+            name="phone"
+            value="{{ current_user.phone }}"
+        >
+
+        <button class="btn btn-main">
+            Update Profile
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
